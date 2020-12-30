@@ -1,1 +1,22 @@
+~version: "2.1"
 
+$container: //div[has-class("td-post-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("td-post-header")]/h1
+title: $title
+
+$date: //header//span[has-class("td-post-date")]//@datetime
+@match("(\\d+.*)\\+",1): $date
+@datetime(+7,"en-US","yyyy-MM-dd'T'hh:mm:ss"): $date
+published_date: $@
+
+$author: //div[has-class("td-post-author-name")]/a
+author: $author
+
+<figure>: //a[.//img] 
+
+@remove: //div[@id="toc_container"]
