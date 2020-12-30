@@ -1,0 +1,23 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("post_1_0_0__detail")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("post_1_0_0__title")]/h1
+title: $title
+
+$subtitle: //div[has-class("sapo")]
+subtitle: $subtitle
+
+$date: //div[has-class("post_1_0_0__title")]/p[has-class("date")]
+@match("(\\d.*)",1): $date
+@datetime(+7, "en-US","yyyy-dd-mm hh-mm"): $date
+published_date: $@
+
+@remove: //div[@id="toc_container"]
+
+<figure>: //p[.//img]
