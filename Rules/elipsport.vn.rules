@@ -1,0 +1,29 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("container")]/h1
+title: $title
+
+$subtitle: $body/p[not(prev-sibling::node())]
+subtitle:$subtitle
+
+$date: //script[contains(.//text(),"datePublished")]
+@match("datePublished\\W+(\\d.*\\d)",1): $date
+@datetime(+7,"en-US","yyyy-MM-dd'T'hh:mm:ss"): $date
+published_date: $@
+
+<figure>: //p[.//img]
+<figure>: //a[.//img]
+<figure>: //strong[.//img]
+
+$img: //img[not(./@src)]
+@map( $img ) {
+  $img: $@
+  @set_attr(src,$img/@data-src): $img
+}
