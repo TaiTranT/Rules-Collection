@@ -1,0 +1,21 @@
+~version: "2.1"
+
+$container: //div[has-class("wdn-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("wdn-title")]/h1
+title: $title
+
+$subtitle: //div[has-class("wdn-description")]/h2
+subtitle: $subtitle
+
+$date: //div[has-class("wdn-date")]
+@match("(\\d.*)",1): $date
+@datetime(+7,"en-US","dd/MM/yyyy hh:mm"): $date
+published_date : $@
+
+@remove: //div[has-class("table-content")]
+@remove: //div[@style="text-align: right;"]
