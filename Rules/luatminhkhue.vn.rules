@@ -1,1 +1,26 @@
 
+#author : Nhung
+~version: "2.1"
+$container: //div[has-class("post-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("main-title entry-title")]/h1
+title: $title
+$subtitle: //div[has-class("description entry-summary")]
+subtitle: $subtitle
+
+$date: //div[has-class("meta-info vcard")]//time/@datetime
+@match("(\\d+.*\\d)",1): $date
+@datetime(+7,"en-US","dd/MM/yyyy'T'hh:mm"): $date
+published_date:$@
+
+$author: //div[has-class("meta-info")]//span[has-class("author")]
+author: $author
+
+<figure>: //p[.//img]
+
+@remove: $body//div[has-class("toc")]
+@remove: $body//p[./strong[starts-with(.//text(),">")]]
