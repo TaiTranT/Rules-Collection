@@ -1,0 +1,25 @@
+~version: "2.1"
+
+$container: //div[has-class("post-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("post-title")]/h1
+title: $title
+
+$subtitle: $body/div[not(prev-sibling::node())]/next-sibling::p
+subtitle: $subtitle
+
+$date: //dive[has-class("post-date")]/a
+@match("(\\d+.*)\\+",1): $date
+@datetime(+7,"en-US","yyyy-MM-dd'T'hh:mm:ss"): $date
+published_date: $@
+
+$author?: $body//p[contains(.//text(),"Tác giả")]
+$author?: //span[has-class("post-auhor-date post-auhor-date-full")]//a[has-class("post-author")]
+@replace("Tác giả:",""): $author
+author: $author
+
+@remove: //div[@id="toc_container"]
