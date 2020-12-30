@@ -1,0 +1,79 @@
+# created_by    : auto-generater@pobble.io
+# created_at    : 2019-11-28 05:58:37.907671
+# maintainer    : <your_email>@pobble.io
+
+~version: "2.1"
+
+$article_ids: //link[@rel="shortlink"]/@href
+@match("(\\d+)$",1): $article_ids
+article_id: $article_ids
+
+$container?: //div[has-class("content-inner")]
+$container?: //div[has-class("post-dynamic")]
+
+# Validate page as an article
+!exists: $article_id
+?exists: $container
+
+# Define the essential elements
+body: $container
+content_type: "generic"
+is_live: "no"
+
+title: //div[has-class("entry-header")]/h1[has-class("jeg_post_title")]
+title: //h1[has-class("post-title")]
+@replace("• TechTimes",""): $title
+
+
+
+$subtitle?: $body/h2[not(prev-sibling::node())]
+$subtitle?: $body/div/h2[not(prev-sibling::node())]
+$subtitle?: $body/h1[not(prev-sibling::node())]
+$subtitle?: $body/p[./b][not(prev-sibling::node())]
+subtitle: $subtitle
+
+author: //span[has-class("posted-by")]/a[@rel="author"]
+
+$date_pub: //meta[@property="article:published_time"]/@content
+@datetime(+7, "en-US", "yyyy-MM-dd'T'hh:mm:ss"): $date_pub
+published_date: $@
+
+$date_mod: //meta[@property="article:modified_time"]/@content
+@datetime(+7, "en-US", "yyyy-MM-dd'T'hh:mm:ss"): $date_mod
+modified_date: $@
+
+topic: //div[has-class("category cf")]/span/a/text()
+
+# convert p with strong only to h3
+<h3>: $body/p[./strong][count(node()) <= 2][descendant::*/text()=./strong/text()][./next-sibling::p]
+@simplify
+
+# replace not well-formed node which contains image into figure 
+
+<figure>: //p[.//iframe]
+<figure>: //td[.//img]
+<figure>: //p[.//img]
+<figure>: //a[.//img]
+<figure>: $body//div[has-class("wp-caption")]
+<figcaption>: //p[has-class("Image")]
+<figcaption>: $body//p[has-class("wp-caption-text")]
+
+$figcaptions: $body//figcaption
+
+@map( $figcaptions ) {
+  $captions: $@
+  $figure: $captions/prev-sibling::figure[1]
+  @append_to($figure): $captions
+}
+
+$origin_urls: //p[@style="text-align: right;"]//em[starts-with(./text(),"Nguồn")]
+$origin_urls: //p[@style="text-align: right;"]//a[starts-with(./text(),"Nguồn")]
+@match("(.*?)(http.*)",2): $origin_urls
+origin_url: $origin_urls
+
+@remove: $body//section[has-class("block-wrap")]
+@remove: $body//p[@style="text-align: right;"]
+@remove: $body// p[./button[has-class("responsivevoice-button")]]
+@remove: //script
+@remove: $body//div[contains(@id,"ScriptRoot")]
+@remove: $body//p[not(./text()) or not(contains(./text()," "))][.//a]
