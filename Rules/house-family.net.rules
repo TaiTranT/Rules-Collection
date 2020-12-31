@@ -1,0 +1,23 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("blog-post")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("blog-post-title")]/h1
+title: $title
+
+$subtitle: $body/p[not(prev-sibling::node())]
+subtitle: $subtitle
+
+$date: //div[has-class("blog-date")]
+@datetime(+7,"en-US","MMMM dd, yyyy"): $date
+published_date : $@
+
+$author: //div[has-class("author-wrapper")]/a[has-class("author-name")]
+author: $author
+
+@remove: //div[has-class("moblie-toc")]
