@@ -1,0 +1,22 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("entry-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("col-sm-12 page-content")]/h1
+title: $title
+
+$subtitle: //div[has-class("entry-content")]/p[@style="text-align: justify;"]
+subtitle: $subtitle
+
+$date: //meta[@property="article:published_time"]/@content
+@match("(\\d.*)",1): $date
+@datetime(+7,"en-US","yyyy-MM-dd'T'hh:mm:ss"): $date
+published_date: $@
+
+<figure>: //a[.//img]
+<figure>: //p[.//img]
