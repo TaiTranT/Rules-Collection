@@ -1,0 +1,23 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("g1-content-narrow g1-typography-xl entry-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("entry-inner")]/h1
+title: $title
+
+$date: //meta[@property="og:updated_time"]/@content
+@match("(\\d.*)\\+",1): $date
+@debug
+@datetime(+7,"en-US","yyyy-MM-dd'T'hh:mm:ss"): $date
+published_date : $@
+
+$author: //meta[@property="article:author"]/@content
+author: $author
+
+@remove: $body//div[has-class("kk-star-ratings")]
+@remove: $body/p[not(next-sibling::node())]
