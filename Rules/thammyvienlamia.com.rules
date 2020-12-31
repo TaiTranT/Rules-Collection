@@ -1,0 +1,27 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("entry-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("entry-title")]/h1
+title: $title
+
+$subtitle: $body/p[not(prev-sibling::node())]
+subtitle: $subtitle
+
+$date: //meta[@property="og:updated_time"]/@content
+@match("(\\d.*)",1): $date
+@datetime(+7,"en-US","yyyy-MM-dd'T'hh:mm:ss"): $date
+published_date : $@
+
+$author: //span[has-class("author")]
+@replace("Tác giả:","")
+author: $author
+
+@remove: //div[@id="ez-toc-container"]
+
+<figure>: //a[.//img]
