@@ -1,6 +1,8 @@
-
 #author : Nhung
+#modified: taitrant
+
 ~version: "2.1"
+
 $container: //div[has-class("post-content")]
 
 body: $container
@@ -9,18 +11,32 @@ is_live: "no"
 
 $title: //div[has-class("main-title entry-title")]/h1
 title: $title
+
 $subtitle: //div[has-class("description entry-summary")]
 subtitle: $subtitle
 
-$date: //div[has-class("meta-info vcard")]//time/@datetime
+$date: //div[has-class("meta-info vcard")]//abbr[has-class("published")]/@title
 @match("(\\d+.*\\d)",1): $date
-@datetime(+7,"en-US","dd/MM/yyyy'T'hh:mm"): $date
-published_date:$@
+@datetime(+7,"en-US","dd-MM-yyyy'T'hh:mm"): $date
+published_date: $@
+
+$date_mod: //div[has-class("meta-info vcard")]//time[has-class("updated")]/@datetime
+@match("(\\d+.*\\d)",1): $date_mod
+@datetime(+7,"en-US","dd-MM-yyyy'T'hh:mm"): $date_mod
+modified_date: $@
 
 $author: //div[has-class("meta-info")]//span[has-class("author")]
 author: $author
 
 <figure>: //p[.//img]
 
+$img_base64: //img[contains(@src,"data:image")]
+@map( $img_base64 ) {
+  $img: $@
+  @set_attr(src,$img/@data-src): $img
+}
+
 @remove: $body//div[has-class("toc")]
-@remove: $body//p[./strong[starts-with(.//text(),">")]]
+@remove: $body//p[.//strong[starts-with(.//text(),">")]]
+@remove: $body//p[starts-with(.//text(),">>")]
+@remove: $body//p[./span/a[contains(@href,"/tu-van-luat-mien-phi-qua-dien-thoai.aspx")]]
