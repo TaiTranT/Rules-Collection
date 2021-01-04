@@ -1,0 +1,27 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //article[has-class("post-article")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("content")]/h1
+title: $title
+
+$subtitle: //section[has-class("article-content")]/p[not(prev-sibling::node())]
+subtitle: $subtitle
+
+$date: //div[has-class("post-meta")]/time[has-class("article-time")]/@datetime
+@datetime(+7,"en-US","yyyy-MM-dd'T'hh:mm:ss"):$date
+published_date : $@
+
+$author: $body//p[not(next-sibling::node())][@style="text-align: right;"]
+@replace("Theo","")
+author:$author
+
+<figure>: //p[.//img]
+
+@remove: $author
+@remove: $body//p[./a][not(./text())]
