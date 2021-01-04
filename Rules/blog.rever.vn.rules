@@ -1,0 +1,20 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("post-body")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("row-fluid-wrapper row-depth-1 row-number-3 ")]
+title: $title
+
+$date: //div[has-class("date-type")]/p[has-class("date-post")]
+@datetime(+7,"en-US","MM/dd/yyyy"): $date
+published_date : $@
+
+$author: //div[has-class("name")]
+author: $author
+
+<figure>: //p[.//img]
