@@ -1,0 +1,33 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("cuu-entry")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("cuu-entry-head")]/h1
+title: $title
+
+$date: //div[has-class("cuu-time mb-2 ")]
+@datetime(+7, "en-US", "yyyy-MM-dd'T'hh:mm:ss"): $date
+published_date: $@
+
+$author: $body/p[has-class("has-text-align-right")]
+@replace("/PLVN","")
+author: $author
+
+$subtitle: $body/p[not(prev-sibling::node())]
+subtitle: $subtitle
+
+<div>: //blockquote[has-class("wp-embedded-content")]
+
+$img: //img[starts-with(@src,"data:image")]
+
+@map( $img ) {
+  $img: $@
+  @set_attr(src,$img/@data-src): $img
+}
+
+@remove: //figure[has-class("wp-block-embed-wordpress")]
