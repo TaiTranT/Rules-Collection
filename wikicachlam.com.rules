@@ -1,0 +1,18 @@
+~version: "2.1"
+$container? : //div[has-class("single_post")]
+body : $container
+content_type : "generic"
+is_live : "no"
+
+<figure> : $body//a[.//img]
+<figure> : $body//p[.//img]
+
+title : //h1
+
+@remove : //ul[has-class("linktrongbaiviet")]
+@remove : //div[@id=("toc_container")]
+@remove : //strong
+@remove : //div[has-class("content-end")]
+
+$photo : $body//image
+@set_attr(src,$photo) : //image
