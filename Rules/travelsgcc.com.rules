@@ -7,6 +7,9 @@ body: $container
 content_type: "generic"
 is_live: "no"
 
+$title: //div[has-class("content-single-news")]/h1
+title: $title
+
 $date: //div[has-class("meta-post-single")]/span
 @match("(\\d.+) -",1):$date
 @datetime(+7,"en-US","dd/MM/yyyy"): $date
