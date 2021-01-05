@@ -1,0 +1,21 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //article[has-class("post-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$date: //div[has-class("meta-post-single")]/span
+@match("(\\d.+) -",1):$date
+@datetime(+7,"en-US","dd/MM/yyyy"): $date
+published_date : $@
+
+$author: //div[has-class("meta-post-single")]/p/text()
+author: $author
+
+@remove: $body/blockquote
+
+<figure>: //a[.//img]
+<figure>: //p[.//img]
