@@ -1,0 +1,22 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("elementor-inner")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("entry-header")]/h1
+title: $title
+
+$date: //div[has-class("entry-header")]//a[@href="https://adammuzic.vn/nhung-dieu-co-ban-ve-hat-boi/"]/text()
+@datetime(+7,"en-US","dd/MM/yyyy"): $date
+published_date : $@
+
+$author: //div[has-class("elementor-text-editor")]/p[contains(.//text(), "Writer")]
+@replace("Writer: ","")
+author: $author
+
+@remove: $author
+@remove: //div[has-class("elementor-text-editor elementor-clearfix")]
