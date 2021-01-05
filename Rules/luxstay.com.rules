@@ -1,4 +1,9 @@
+#modifier: taitrant
 ~version: "2.1"
+
+$article_id: //link[@rel="shortlink"]/@href
+@match("(\\d+)$",1): $article_id
+article_id: $article_id
 
 $container: //div[has-class("td-post-content")]
 
@@ -6,8 +11,15 @@ body: $container
 content_type: "generic"
 is_live: "no"
 
-$title: //div[has-class("td-post-header")]/h1
+$title: //header[has-class("td-post-title")]/h1[has-class("entry-title")]
 title: $title
+
+$cover: $body//div[has-class("td-post-featured-image")]//figure
+cover: $cover
+@remove: $body//div[has-class("td-post-featured-image")]
+
+$subtitle: $body/p[not(prev-sibling::node())]
+subtitle: $subtitle
 
 $date: //header//span[has-class("td-post-date")]//@datetime
 @match("(\\d+.*)\\+",1): $date
@@ -19,4 +31,8 @@ author: $author
 
 <figure>: //a[.//img] 
 
+image_url: //meta[@property="og:image"]/@content
+
 @remove: //div[@id="toc_container"]
+@remove: $body//div[has-class("td-a-rec-id-content_bottom")]/prev-sibling::p
+@remove: $body//div[has-class("td-a-rec-id-content_bottom")]
