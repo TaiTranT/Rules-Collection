@@ -1,0 +1,31 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("entry-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //header[has-class("entry-header")]/h1
+title: $title
+
+$subtitle: $body/p[@style="text-align: justify;"]
+subtitle: $subtitle
+
+$date: //meta[@itemprop="datePublished"]/@content
+@datetime(+7,"en-US","dd/MM/yyyy"): $date
+published_date : $@
+
+$author: $body/p[@style="text-align: right;"]
+@replace(" \\(\\w.+\\)",""): $author
+author: $author
+
+@remove: //div[has-class("ltt-contentbox white")]
+@remove: $author
+@remove: $body/p/strong
+@remove: //span[has-class("updated hidden")]
+@remove: //span[has-class("author vcard hidden")]
+@remove: //div[has-class("post-rating-wrap")]
+
+<figure>: //p[.//img]
