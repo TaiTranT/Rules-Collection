@@ -1,18 +1,39 @@
 ~version: "2.1"
+
+$article_id: //link[@rel="shortlink"]/@href
+@match("(\\d+)$",1): $article_id
+article_id: $article_id
+
 $container? : //div[has-class("single_post")]
+
+!exists: $article_id
+?exists: $container
+
 body : $container
 content_type : "generic"
 is_live : "no"
 
+title : //header//h1[has-class("title")]
+
 <figure> : $body//a[.//img]
 <figure> : $body//p[.//img]
 
-title : //h1
+$photo : $body//img[contains(@src,"data:image")]
 
+$date_pub: //meta[@property="article:published_time"]/@content
+@match("(\\d+.*)\\+",1): $date_pub
+@datetime(+7,"en-US","yyyy-MM-dd'T'hh:mm:ss"): $date_pub
+published_date: $@
+
+image_url: //meta[@property="og:image"]/@content
+
+topic: //div[has-class("breadcrumbs")]//a[not(contains(./text(),"Home"))]/text()
+
+@remove: //script
+@remove: //div[contains(@id,"ads")]
+@remove: //div[@id="linkallcuoibv"]
 @remove : //ul[has-class("linktrongbaiviet")]
 @remove : //div[@id=("toc_container")]
-@remove : //strong
 @remove : //div[has-class("content-end")]
-
-$photo : $body//image
-@set_attr(src,$photo) : //image
+@remove: //div[has-class("g-ytsubscribe")]
+@remove: $body//div[./strong[starts-with(./text(),"Tham khảo thêm:")]]
