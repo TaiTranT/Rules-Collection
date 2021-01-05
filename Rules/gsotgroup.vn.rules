@@ -1,0 +1,18 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("entry-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("flex-col")]/h1
+title: $title
+
+$subtitle: //div[has-class("entry-content")]/h5
+subtitle: $subtitle
+
+$date: //meta[@property="article:published_time"]/@content
+@datetime(+7,"en-US","yyyy-MM-dd'T'hh:mm:ss"): $date
+published_date : $@
