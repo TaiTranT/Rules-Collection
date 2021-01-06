@@ -1,0 +1,27 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("page-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //article[@id="post-1456"]/h1
+title: $title
+
+$date: //div[has-class("post-date")]/time[has-class("entry-date")]/@datetime
+@datetime(+7,"en-US","yyyy-MM-dd'T'hh:mm:ss"):$date
+published_date : $@
+
+$author: //div[has-class("post-author")]/strong/a/text()
+author: $author
+
+<figure>: //a[.//img]
+
+@remove: //div[has-class("single-post-meta")]
+@remove: //div[has-class("kk-star-ratings")]
+@remove: //div[has-class("wp_rp_wrap")]
+@remove: //div[has-class("tptn_counter")]
+@remove: //div[has-class("single-post-about-author")]
+@remove: //div[@id="comments"]
