@@ -1,18 +1,26 @@
+#modifier : taitrant
 ~version: "2.1"
 
+$article_id: //link[@rel="shortlink"]/@href
+@match("(\\d+)$",1):$article_id
+article_id: $article_id
+
 $container: //div[has-class("post-content")]
+
+!exists: $article_id
+?exists: $container
 
 body: $container
 content_type: "generic"
 is_live: "no"
 
-$title: //div[has-class("post-title")]/h1
+$title: //h1[has-class("post-title")]
 title: $title
 
 $subtitle: $body/div[not(prev-sibling::node())]/next-sibling::p
 subtitle: $subtitle
 
-$date: //dive[has-class("post-date")]/a
+$date: //meta[@property="article:published_time"]/@content
 @match("(\\d+.*)\\+",1): $date
 @datetime(+7,"en-US","yyyy-MM-dd'T'hh:mm:ss"): $date
 published_date: $@
@@ -20,6 +28,16 @@ published_date: $@
 $author?: $body//p[contains(.//text(),"Tác giả")]
 $author?: //span[has-class("post-auhor-date post-auhor-date-full")]//a[has-class("post-author")]
 @replace("Tác giả:",""): $author
+@replace("Traveloka Intern",""): $author
 author: $author
 
+@background_to_image: //div[has-class("blog-slider-item")]
+cover: $@
+
+image_url: //meta[@property="og:image"]
+<blockquote>: //table[count(.//tr) < 2]
+
 @remove: //div[@id="toc_container"]
+@remove: $author
+@remove: $body//div[@id="wpdevar_comment_1"]/following-sibling::node()
+@remove: $body//div[@id="wpdevar_comment_1"]
