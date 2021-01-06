@@ -1,0 +1,33 @@
+~version: "2.1"
+
+$container? : //div[has-class("col-800")]
+
+body : $container
+
+content_type : "generic"
+is_live : "no"
+
+title : //div[has-class("article__header")]//h1
+
+subtitle ://h2[has-class("article__sapo")]
+
+$day : //div[has-class("article__meta")]//time
+
+@datetime(+7,"vi-VN","hh:mm dd/MM/yyyy"): $day
+
+published_date:$@
+
+$author? ://p[has-class("author source-footer")]
+author : $author
+@replace("Theo","") : $author
+@replace("(\/.+)",""): $author
+@debug : $author
+
+@remove : //div[has-class("article__meta")]
+@remove : //div[has-class("article__inner-relate")]
+@remove : //div[has-class("article__social")]
+@remove : //div[has-class("article__tag")]
+@remove : //div[has-class("article__outer-relate ss_relate")]
+@remove : //p[has-class("author source-footer")]
+
+
