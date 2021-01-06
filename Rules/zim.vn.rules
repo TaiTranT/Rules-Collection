@@ -1,0 +1,31 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("entry-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //header[has-class("entry-header")]/h1
+title: $title
+
+$date: //span[has-class("posted-on")]/time[has-class("entry-date")]/@datetime
+@datetime(+7,"en-US","yyyy-MM-dd'T'hh:mm:ss"):$date
+published_date : $@
+
+$author: $body/p[@style="text-align: right;"]
+author: $author
+@debug
+
+<figure>: //a[.//img]
+<figure>: //p[.//img]
+
+@remove: //div[has-class("abh_tab_content")]
+@remove: //ul[has-class("abh_tabs")]
+@remove: //div[has-class("advads-thi-thu")]
+@remove: //div[has-class("advads-tuyen-dung_2")]
+@remove: //footer[has-class("entry-meta")]
+@remove: //div[has-class("advads-store-and-mock-test")]
+@remove: $body/p[not(contains(.//text()," "))]
+@remove: $author
