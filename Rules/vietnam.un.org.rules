@@ -1,0 +1,19 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[@id="press_release_body"]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[@id="press_release-title"]/h1
+title: $title
+
+$subtitle: //div[has-class("clearfix text-formatted")]/ul
+subtitle: $subtitle
+
+$date: //div[has-class("field field--name-field-date field--type-datetime")]/time/text()
+@replace("Tháng Ba","03")
+@datetime(+7,"en-US","dd MM yyyy"):$date
+published_date : $@
