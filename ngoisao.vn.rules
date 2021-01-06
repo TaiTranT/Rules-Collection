@@ -1,0 +1,31 @@
+~version: "2.1"
+
+$container? : //div[has-class("content-ct")]
+
+body : $container 
+
+content_types : "generic"
+is_live : "no"
+
+<figure> : body//a[.//img]
+<figure> : body//p[.//img]
+
+title : //h1[has-class("ct-title")]
+
+subtitle : //h2[has-class("title-2")]
+
+$day : //div[has-class("ct-time")]//span[2]
+@datetime(+7,"vi-Vn","hh:mm dd/MM/yyyy") :$day
+
+published_date:$@
+
+$author? : //div[has-class("ct-author")]
+author : $author
+@replace("(\\(.+)",""): $author
+author : $author
+@debug : $author
+
+@remove : //div[has-class("left-ct")]
+@remove : //div[has-class("box_news_suggest2")]
+@remove : $author
+
