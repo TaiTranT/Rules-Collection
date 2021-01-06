@@ -1,0 +1,29 @@
+#author: Nhung
+
+~version: "2.1"
+
+$container: //div[has-class("entry-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //header[has-class("entry-header")]/h1/text()
+title: $title
+
+$substitle: //div[has-class("entry-content")]//p/strong
+subtitle: $substitle
+
+$date: //time[has-class("updated")]/@datetime
+@datetime(+7,"en-US","yyyy-MM-dd'T'hh:mm:ss"): $date
+published_date : $@
+
+$author: //span[has-class("author-name")]/text()
+author: $author
+
+<figure>: //p[.//img]
+<figure>: //h2[.//img]
+
+@remove: //div[@id="toc_container"]
+@remove: //div[has-class("code-block code-block-4 ai-viewport-1 ai-viewport-2")]
+@remove: $body/p[not(next-sibling::node())]
