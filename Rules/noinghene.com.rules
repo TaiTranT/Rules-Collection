@@ -1,0 +1,22 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("entry-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //header[has-class("entry-header")]/h1
+title: $title
+
+$date: //script[contains(.//text(),"datePublished")]
+@match("datePublished\\W+(\\d.*\\d)\\+.*\\W+dateModified",1): $date
+@datetime(+7,"en-US","yyyy-MM-dd'T'hh:mm:ss"):$date
+published_date : $@
+
+@remove: $body/p[contains(.//text(),"Hãy tham gia gia đình của song ngư tại:")]/next-sibling::ul[not(next-sibling::node())]
+@remove: $body/p[contains(.//text(),"Hãy tham gia gia đình của song ngư tại:")]
+@debug: $body/node()
+@remove: $body/p[not(next-sibling::node())][not(contains(.//text()," "))]
+@remove: $body/p[not(next-sibling::node())][contains(.//text(),">>")]
