@@ -1,0 +1,27 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("entry-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("entry-meta")]/h1
+title: $title
+
+$subtitle: $body/p[not(prev-sibling::node())]
+subtitle: $subtitle
+
+$date: //header[has-class("entry-header")]/span[has-class("date")]/text()
+@datetime(+7,"en-US","hh:mm dd/MM/yyyy"):$date
+published_date : $@
+
+$img: //img[starts-with(@src,"data:image")]
+
+@map( $img ) {
+$img: $@
+@set_attr(src, $img/@data-lazy-src)
+}
+
+@remove: $body/div[not(next-sibling::div)]
