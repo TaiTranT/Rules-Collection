@@ -1,0 +1,28 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("reading-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("m-t-sm")]/h1/text()
+title: $title
+
+$subtitle: $body/p[not(prev-sibling::node())]
+subtitle: $subtitle
+
+$date: //div[has-class("col-xs-4")][./i[has-class("icon-clock")]]
+@match("(\\d+.*)",1): $date
+@datetime(+7,"en-US","dd/MM/yyyy"): $date
+published_date : $@
+
+$author: //div[has-class("clear")]/a/text()
+author: $author
+
+<figure>: //p[.//img]
+<figure>: //p[.//iframe]
+
+@remove: $body/figure[.//iframe[contains(@src,"open.spotify.com/embed")]]
+@remove: $body/p[not(next-sibling::node())]
