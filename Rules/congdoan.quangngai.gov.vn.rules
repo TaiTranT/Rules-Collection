@@ -1,0 +1,21 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("detailContent")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //td[@align="left"]/span[@id="_ctl0_ContentPlaceHolder1_lb_title"]
+title: $title
+
+$date: //div[has-class("dnewsdateleft")]/span/text()
+@datetime(+7,"en-US","dd/MM/yyyy hh:mm:ss a"):$date
+published_date : $@
+
+$author: //div[@align="center"]/b/text()
+author: $author
+
+@remove: $author
+@remove: $body/p[not(next-sibling::node())]
