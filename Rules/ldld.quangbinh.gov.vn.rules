@@ -1,0 +1,26 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("article_content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("article_title")]
+title: $title
+
+$subtitle: //div[has-class("article_summary_detail")]
+subtitle: $subtitle
+
+$date: //table[@id="tblPrint_Date61"]//td[has-class("article_date")]/text()
+@replace(" Thứ Hai, ","")
+@datetime(+7,"en-US","hh:mm, dd-MM-yyyy"): $date
+published_date : $@
+
+$author: //span[@style="font-family: Arial;"]/b[@style="line-height: 14pt; text-indent: 36pt;"]/text()
+author: $author
+
+<figure>: //p[.//img]
+
+@remove: $body/p[@style="text-align: right;"]
