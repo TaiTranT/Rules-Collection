@@ -1,0 +1,25 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("newcontent")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("col-lg-9")]/h1
+title: $title
+
+$subtitle: //div[has-class("col-lg-9")]/h2
+subtitle: $subtitle
+
+$date: //div[has-class("col-lg-9")]/span/text()
+@datetime(+7,"en-US","dd/MM/yyyy hh:mm a"):$date
+published_date : $@
+
+$author: $body/p[@align="right"]
+author: $author
+
+<figure>: //p[.//img]
+
+@remove: $author
