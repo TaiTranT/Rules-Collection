@@ -1,0 +1,22 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("box-title")]/h1
+title: $title
+
+$subtitle: //section[has-class("_box news_detail")]/p[has-class("teaser")]
+subtitle: $subtitle
+
+$date: //section[has-class("_box news_detail")]/span[has-class("date")]/text()
+@datetime(+7,"en-US","dd/MM/yyyy - hh:mm"):$date
+published_date : $@
+
+@remove: $body/p[not(next-sibling::node())]
+
+<figure>: //p[.//img]
