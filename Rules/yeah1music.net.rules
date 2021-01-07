@@ -1,0 +1,31 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("article-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("card-body")]/h1
+title: $title
+
+$subtitle: //p[has-class("article-sapo")]
+subtitle: $subtitle
+
+$date: //div[has-class("card-article")]//span[has-class("time")]
+@match("(\\d.*)",1):$date
+@datetime(+7,"en-US","hh:mm dd/MM/yyyy"): $date
+published_date : $@
+
+$author: //div[has-class("card-article")]//span[not(prev-sibling::node())]
+author: $author
+
+<figure>: //p[.//img]
+
+@remove: //div[has-class("text-center")][.//script]
+@remove: //script
+@remove: $body//div[contains(@id,"sas_")]
+@remove: //ins
+@remove: //comment()
+@remove: $body//p[not(next-sibling::node())]
