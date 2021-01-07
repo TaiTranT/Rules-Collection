@@ -1,0 +1,22 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("post-content-area")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("entry-header")]/h1
+title: $title
+
+$date: //div[has-class("jeg_meta_container")]//div[has-class("jeg_meta_date")]/a/text()
+@datetime(+7,"en-US","dd/MM/yyyy"):$date
+published_date : $@
+
+$author: //div[has-class("jeg_meta_container")]//div[has-class("jeg_meta_author")]/a/text()
+author: $author
+
+@remove: //nav[@id="ftwp-contents"]
+@remove: $body//p[@style="text-align: right;"][not(next-sibling::node())]
+@remove: $body//p[@style="text-align: right;"][a[@href="https://nhachot.vn/nhac-hot/"]]
