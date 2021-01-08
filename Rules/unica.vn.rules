@@ -1,0 +1,26 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("blog_content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //h1[has-class("post-title")]
+title: $title
+
+$date: //div[has-class("post-publish")]/text()
+@datetime(+7,"en-US","dd-MM-yyyy"): $date
+published_date : $@
+
+<figure>: //p[.//img]
+<figure>: //a[.//img]
+
+@remove: $body//p[@style="text-align:center"]/iframe
+@remove: //meta[@name="author"]
+@remove: //div[has-class("row")]
+@remove: $body//p[@style="text-align:center"]
+@remove: $body//div[has-class("pull-right")]
+@remove: $body//span[has-class("kndtc-label fl")]
+@remove: $body//a[has-class("tag")]
