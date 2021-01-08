@@ -1,0 +1,42 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("content-body__article")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("cover__title")]/h1
+title: $title
+
+$subtitle: //blockquote[has-class("article-quote")]
+subtitle: $subtitle
+
+$date: //div[has-class("cover__title")]//small/text()
+@replace("Cập nhật lúc ","")
+@datetime(+7,"en-US","dd/MM/yyyy hh:mm"):$date
+published_date : $@
+
+$author: $body//p[@style="text-align: right"]/text()
+@replace("tổng hợp","")
+author: $author
+
+$img: //img[@src]
+
+@map ($img) {
+$img: $@
+@set_attr(src, $img/@data-src)
+}
+
+<figure>: //a[.//img]
+<figure>: //p[.//img]
+
+@remove: //div[has-class("content-body__article")]//article[h3[starts-with(.//text(),"Tags")]]
+@remove: //div[@id="fb-root"]
+@remove: //div[has-class("flex-start")]
+@remove: $body//p[@style="text-align: center"]
+@remove: $author
+@remove: //div[has-class("ads-block")]
+@remove: $body//p[@style="text-align: right"]
+@remove: $body//p[not(next-sibling::node())]
