@@ -1,0 +1,26 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("entry-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //header[has-class("entry-header-title")]/h1
+title: $title
+
+$date: //span[has-class("post-date")]
+@match("(\\d.*\\d)",1): $date
+@datetime(+7,"en-US","MM dd, yyyy"): $date
+published_date : $@
+
+$author: //span[has-class("author-title")]/a/text()
+author: $author
+
+<figure>: //p[.//img]
+
+@remove: //div[@id="ez-toc-container"]
+@remove: //div[has-class("post-views")]
+@remove: $body//ol[prev-sibling::p[contains(.//text(),"Xem thêm:")]]
+@remove: $body//p[contains(.//text(),"Xem thêm:")]
