@@ -1,0 +1,28 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("asset-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("asset-full-content-title")]
+title: $title
+
+$subtitle: //div[has-class("sapo-wrapper")]
+subtitle: $subtitle
+
+$date: //div[has-class("assetPublishDate")]
+@match("(\\d.*\\d)",1): $date
+@datetime(+7,"en-US","dd/MM/yyyy | hh:mm"): $date
+published_date : $@
+
+$author: $body//p[@style="margin-left:0cm; margin-right:0cm; text-align:right"]//span[@style="font-size:14.0px"]/text()
+author: $author
+
+<figure>: //p[.//img]
+
+@remove: $author
+@remove: //div[has-class("related_asset_title")]
+@remove: $body//p[has-class("view-content-author")]
