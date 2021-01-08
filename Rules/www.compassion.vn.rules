@@ -1,0 +1,23 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("post-content__body")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //span[has-class("post-title__text")]/span[has-class("blog-post-title-font")]
+title: $title
+
+$date: //span[has-class("post-metadata__date time-ago")]/text()
+@datetime(+7,"en-US","MMM dd,yyyy"): $date
+published_date : $@
+
+$author: //span[has-class("H6b5e")]/text()
+author: $author
+
+@remove: $body//p[@id="viewer-ba45j"]
+@remove: $body//p[@id="viewer-co7du"]
+@remove: $body//p[@id="viewer-52adk"]
+@remove: $body//p[@id="viewer-745id"]
