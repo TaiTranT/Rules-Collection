@@ -1,0 +1,28 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("detail")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //article[has-class("pc-postdetail")]/header/h1
+title: $title
+
+$subtitle: //article[has-class("pc-postdetail")]/header/p[@style="text-align:justify"]
+subtitle: $subtitle
+
+@remove: $body//p[@style="text-align:right"]/strong[contains(.//text(),"theo")]
+@remove: $body//p[@style="text-align:right"]/strong[contains(.//text(),"Ảnh")]
+$author: $body//p[@style="text-align:right"]/strong[not(next-sibling::node())]
+author: $author
+
+$date: //article[has-class("pc-postdetail")]/header/div[has-class("display-date")]
+@match("\\- (\\d+.*\\d)",1): $date
+@datetime(+7,"en-US","dd/MM/yyyy hh:mm"): $date
+published_date : $@
+
+<figure>: //p[.//img]
+
+@remove: $author
