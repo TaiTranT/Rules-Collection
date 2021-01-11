@@ -1,0 +1,24 @@
+~version: "2.1"
+
+$container? : //div[@id="main-detail"]
+body : $container 
+
+<figure> : //table[.//img]
+<figure> : //a[.//img]
+
+title : //h1[has-class("art-title")]
+
+subtitle : //p[@style="text-align: justify;"]
+
+$day : //p[has-class("fl-right dt")]
+@replace("(\\ \\|)",""): $day
+@match("(\\d+..............)",1) : $day
+@datetime(+7,"vi-Vn","dd/MM/yyyy hh:mm"):$day
+published_date:$@
+
+$author? : //p[@style="text-align: right;"]//strong
+author : $author
+
+@remove : //nav[has-class("breakcrumb pkg")]
+@remove : //section[has-class("story")]
+@remove : //p[@style="text-align: right;"]
