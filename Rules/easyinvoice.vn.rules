@@ -1,0 +1,23 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("content-single")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$author: //div[has-class("dtool-bar")]/span/font
+author: $author
+
+$date: //div[has-class("dtool-bar")]/span[not(prev-sibling::node())]
+@match("\\- (\\d+.*\\d)",1): $date
+@datetime(+7,"en-US","dd/MM/yyyy"): $date
+published_date : $@
+
+<figure>: //p[.//img]
+
+@remove: //div[@id="toc_container"]
+@remove: $body/p[contains(.//text(),"Nếu như bạn đọc còn thắc mắc hay có các góp ý chỉnh sửa vui lòng gửi tới chúng tôi thông thông hòm thư contact@softdreams.vn hoặc fanpage: ")]
+@remove: $body/font[contains(.//text(),"Tags: ")]
+@remove: //label[has-class("post_tags")]
