@@ -1,0 +1,24 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("AD_body")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("article_detail")]/h4
+title: $title
+
+$subtitle: //div[@style="text-align:justify;"]
+subtitle: $subtitle
+
+$date: //div[has-class("date")][contains(.//text()," ")]
+@replace("\\n\\s+"," "): $date
+@replace("\\s+"," "): $date
+@match("(\\d+.*\\d)",1): $date
+$date_pub: //div[has-class("date")][contains(.//text()," ")]
+published_date : $@
+
+$author: //div[has-class("Content_Author")]
+author: $author
