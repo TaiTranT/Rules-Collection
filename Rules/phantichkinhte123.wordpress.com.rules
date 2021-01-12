@@ -20,7 +20,6 @@ author: $author
 @remove: //div[has-class("sd-block")]
 @remove: //div[@id="jp-relatedposts"]
 @remove: $body/p[@style="text-align:justify;"][contains(.//text(),"Nguồn")]
-@remove: $body/p[@style="text-align:right;"]
 @remove: $body/p[@style="text-align:right;"][contains(./text(),"dịch")]
 @remove: $author
 
