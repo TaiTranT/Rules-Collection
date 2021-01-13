@@ -1,0 +1,28 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("description")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //div[has-class("main_page_left_inner")]/h1
+title: $title
+
+$subtitle: //div[has-class("main_page_left_inner")]/h2
+subtitle: $subtitle
+
+$date: //div[has-class("news_time")]/text()
+@replace("Thứ 2, ","")
+@datetime(+7,"en-US","dd/MM/yyyy, hh:mm a"):$date
+published_date : $@
+
+$author: //div[has-class("creator")]/text()
+@replace("Theo ","")
+author: $author
+
+<figure>: //em[.//img]
+<figure>: //p[.//img]
+
+@remove: $author
