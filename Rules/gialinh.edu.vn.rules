@@ -1,0 +1,24 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("single-blog-content")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$img: //img[starts-with(@src,"data:image")]
+
+@map( $img ) {
+$img: $@
+@set_attr(src,$img/@data-lazy-src): $img
+}
+
+$date: //script[contains(.//text(),"datePublished")]
+@match("datePublished\\W+(\\d+.*\\d)\\W+dateMod.*datePub",1):$date
+@datetime(+7,"en-US","yyyy-MM-dd'T'hh:mm:ss"):$date
+published_date : $@
+
+<figure>: //p[.//img]
+
+@remove: $body/p[@style="text-align: right;"][contains(.//text(),"Được tổng hợp bởi ")]
