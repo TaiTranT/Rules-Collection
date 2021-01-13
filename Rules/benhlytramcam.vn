@@ -20,6 +20,13 @@ published_date : $@
 $author: //span[has-class("author vcard")]/span[has-class("fn")]/text()
 author: $author
 
+$img : xpath
+$img: //img[not(@src)]
+
+@map( $img ) {
+$img: $@
+@set_attr(src,$img/@data-src): $img
+}
 <figure>: //p[.//img]
 
 @remove: //div[has-class("bv")]
