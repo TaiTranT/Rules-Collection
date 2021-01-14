@@ -1,0 +1,33 @@
+~version: "2.1"
+
+$container? : //div[has-class("content-detail")]//article
+
+body : $container
+content_type : "generic"
+is_live : "no"
+
+<figure> : //a[.//img]
+
+title : //h1[has-class("post-title")]
+
+@remove : //div[has-class("sapo")]//span
+subtitle : //div[has-class("sapo")]
+
+$day : //div[has-class("col-sm-6 post-date")]
+@match("(\\d.*)",1): $day
+@replace(" lúc","") : $day
+@replace("\\(.*","") : $day
+@datetime(+7,"en-US","dd/MM/yyyy hh:mm "):$day
+published_date : $@
+
+$author? : //div[has-class("author")]
+@replace("t/h","") : $author
+author : $author
+
+
+@remove : //ul[has-class("related-posts")]
+@remove : //div[has-class("col-sm-6 social-actions")]
+@remove : //div[has-class("social-actions pull-right")]
+@remove : //div[has-class("author")]
+@remove : //div[has-class("col-sm-6 post-date")]
+
