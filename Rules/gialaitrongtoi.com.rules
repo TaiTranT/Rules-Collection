@@ -1,0 +1,31 @@
+#author: Nhung
+~version: "2.1"
+
+$container: //div[has-class("post-content-container")]
+
+body: $container
+content_type: "generic"
+is_live: "no"
+
+$title: //header[has-class("post-title")]/h1
+title: $title
+
+$date: //meta[@property="article:published_time"]/@content
+@datetime(+7,"en-US","yyyy-MM-dd"):$date
+published_date : $@
+
+$author: //div[has-class("author-and-date")]/div[has-class("post-author")]
+@replace("by","")
+author: $author
+
+<figure>: //p[.//img]
+
+@remove: //div[has-class("thb-social-footer-buttons")]
+@remove: //div[has-class("post-comments")]
+@remove: $body//p[@dir="ltr"][contains(.//text(),"Nguồn: ")]
+@remove: //aside[has-class("thb-article-subscribe")]
+@remove: //div[has-class("thb-article-author")]
+@remove: $body//p[@dir="ltr"][contains(.//text(),"Xem thêm")]/following-sibling::node()
+@remove: $body//p[@dir="ltr"][contains(.//text(),"Xem thêm")]
+@remove: //div[has-class("_ohe lfloat")]/span[has-class(" _50f7")]
+@remove: //div[has-class("thb-social-fixed")]
