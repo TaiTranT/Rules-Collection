@@ -1,0 +1,37 @@
+~version: "2.1"
+
+$container? : //div[has-class("entry-content with-share")]
+
+body : $container
+
+content_type : "generic"
+is_live : "no"
+
+title : //div[has-class("jeg_post_title")]
+subtitle : //h2[has-class("jeg_post_subtitle")]
+
+$author : //p[@style="text-align: right;"]
+@replace("Theo ","") : $author
+author : $author
+
+$date : //meta[@property="article:published_time"][1]/@content
+@replace("T"," "):$date
+@match("(\\d.*)\\+",1):$date
+@match("(\\d.+\\W)",1)
+@replace("-","/"):$date
+@datetime(+7,"en-US","dd/MM/yyyy hh:mm") : $date
+published_date :$@
+
+
+<figure> : //p[.//iframe]
+<figure> : //p[.//img]
+
+@remove : //nav[@id="ftwp-contents"]
+@remove : //div[has-class("jeg_share_float_container")]
+@remove : //div[has-class("widget_text awac-wrapper")]
+@remove : //div[@style="display: none;"]
+@remove : $author
+@remove : //div[has-class("alert alert-info")]
+@remove : //div[has-class("alert alert-error")]
+
+
