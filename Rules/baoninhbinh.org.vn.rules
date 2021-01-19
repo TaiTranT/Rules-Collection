@@ -1,0 +1,29 @@
+~version: "2.1"
+
+$container? : //div[has-class("entry-main")]
+body : $container
+
+content_type : "generic"
+is_live : "no"
+
+title : //div[has-class("entry-title")]
+subtitle : //div[has-class("entry-sapo")]
+
+$author : //p[@align="right"]
+@replace("Theo ",""): $author
+@replace("(\\(.*)","") :$author
+author : $author
+
+$date : //div[has-class("post-meta-date")]/@content
+@match("(\\d.+\\W)",1): $date
+@datetime(+7,"en-US","dd/MM/yyyy hh:mm:ss ") : $date
+published_date : $@
+
+
+@remove : //div[has-class("post-meta-elements")]
+@remove : //div[has-class("form-reply-section")]
+@remove : //p[@align="right"]
+
+
+
+
