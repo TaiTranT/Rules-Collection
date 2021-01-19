@@ -3,6 +3,8 @@
 
 $container: //div[has-class("article-content")]
 
+?exists: $container
+
 body: $container
 content_type: "generic"
 is_live: "no"
@@ -23,9 +25,12 @@ author: $author
 
 <figure>: //p[.//img]
 
+image_url: //meta[@property="og:image"]/@content
+cover : //div[has-class("card-img")]//img
+
 @remove: //div[has-class("text-center")][.//script]
 @remove: //script
 @remove: $body//div[contains(@id,"sas_")]
 @remove: //ins
 @remove: //comment()
-@remove: $body//p[not(next-sibling::node())]
+@remove: $body/p[not(next-sibling::node())]
