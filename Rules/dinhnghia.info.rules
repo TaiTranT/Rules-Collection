@@ -1,0 +1,22 @@
+~version: "2.1"
+
+$container? : //div[@id="content"]
+body : $container
+
+content_type : "generic"
+is_live : "no"
+
+title : //h1[has-class("post-title-single entry-title")]
+
+$author : //a[has-class("url fn")]
+author : $author
+
+$date : //time[has-class("updated")]/@datetime
+@replace("T"," "):$date
+@replace("(\\+.*)","") :$date
+published_date :$@
+
+@remove  : //div[@id="toc_container"]
+@remove  : //div[has-class("relpost-thumb-wrapper")]
+@remove  : //div[@id="comments"]
+@remove  : //div[has-class("postmetadata")]
