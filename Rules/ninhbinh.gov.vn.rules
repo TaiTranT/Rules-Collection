@@ -1,0 +1,24 @@
+~version: "2.1"
+
+$container? : //div[@id="ctrl_243846_22_ArticleDetailControl"]
+
+body : $container
+
+content_type : "generic"
+is_live : "no"
+
+title : //div[has-class("ArticleHeader")]
+subtitle : //div[has-class("ArticleSummary")]
+
+$author : //div[@style="text-align: right;"]
+author : $author
+
+$date : //div[has-class("PostDate")]
+@datetime(+7,"en-US","dd/MM/yyyy hh:mm") :$date
+published_date : $@
+
+<figure> : //a[.//img]
+
+@remove : //div[@style="text-align: right;"]
+@remove : //span[@id="tuongphan"]
+@remove : //div[has-class("PostDate")]
