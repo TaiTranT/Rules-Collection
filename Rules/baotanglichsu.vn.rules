@@ -1,0 +1,20 @@
+~version: "2.1"
+
+$container? : //div[has-class("text-justify article-detail")]
+body : $container
+
+content_type : "generic"
+is_live : "no"
+
+title : //h2[has-class("page-header")]
+subtitle : //div[has-class("text-justify article-abstracts")]
+
+$author : //div[has-class("text-justify article-detail")]//p[not(next-sibling::node())]//strong
+author : $author
+
+$date : //div[has-class("blogpost-stat")]
+@match("(\\d+.*\\d)\\s",1) : $date
+@datetime(+7,"en-US","dd/MM/yyyy hh:mm"):$date
+published_date :$@
+
+@remove : //div[has-class("text-justify article-detail")]//p[not(next-sibling::node())]//strong
