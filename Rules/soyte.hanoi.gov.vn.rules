@@ -1,7 +1,13 @@
 #author: Nhung
 ~version: "2.1"
+$article_id: //link[@rel="canonical"]/@href
+@match("publisher\/(\\w+)\/content",1): $article_id
+article_id: $article_id
 
-$container: //div[has-class("asset-content")]
+$container: //div[has-class("journal-content-article")]
+
+!exists : $article_id
+?exists : $container
 
 body: $container
 content_type: "generic"
@@ -22,6 +28,15 @@ $author: $body//p[@style="margin-left:0cm; margin-right:0cm; text-align:right"]/
 author: $author
 
 <figure>: //p[.//img]
+<figcaption>: //p[contains(@style,"text-align:center")][prev-sibling::figure]
+
+$figcaption: $body//figcaption
+
+@map( $figcaption ) {
+  $caption: $@
+  $img: $@/prev-sibling::figure
+  @append_to($img): $caption
+}
 
 @remove: $author
 @remove: //div[has-class("related_asset_title")]
