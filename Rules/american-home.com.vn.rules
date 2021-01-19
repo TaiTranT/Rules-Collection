@@ -1,7 +1,13 @@
 #author: Nhung
 ~version: "2.1"
+$article_id: //link[@rel="shortlink"]/@href
+@match("(\\d+)$",1): $article_id
+article_id: $article_id
 
 $container: //div[has-class("td-post-content")]
+
+!exists: $article_id
+?exists: $container
 
 body: $container
 content_type: "generic"
@@ -16,7 +22,11 @@ published_date : $@
 
 <figure>: //a[.//img]
 
+cover: $body//div[has-class("td-post-featured-image")]//img
+image_url: //meta[@property="og:image"]/@content
+
 @remove: //div[has-class("td-post-sharing-top")]
 @remove: //div[has-class("rmp-results-widget")]
 @remove: //div[has-class("rmp-rating-widget")]
 @remove: //div[has-class("rmp-widgets-container")]
+@remove: $body//p[has-class("has-text-align-right")][.//a[@href="https://american-home.com.vn"]]
