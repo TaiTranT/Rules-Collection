@@ -1,0 +1,26 @@
+~version: "2.1"
+
+$container? : //div[has-class("col-md-8 post-content-container")]
+body : $container
+
+content_type : "generic"
+is_live : "no"
+
+title : //h1[has-class("title text-uppercase text-white")]
+subtitle : //div[has-class("attention-grabber jumbotron bg-primary-faded py-1")]
+
+$author : //div[has-class("text-sm font-italic")]//p[not(next-sibling::node())]
+@replace("Theo ",""): $author
+author : $author
+$date : //script[contains(.//text(),"updatedAt")]
+@match("updatedAt\\W+(\\d+-\\d+-\\d+T\\d+:\\d+:\\d+)",1): $date
+@replace("-","/"): $date
+@replace("T"," "): $date
+@datetime(+7,"en-US","yyyy/MM/dd hh:mm:ss")
+published_date : $@
+
+<figure> : //em[.//img]
+<figure> : //p[.//img]
+
+@remove : //div[has-class("text-sm font-italic")]
+@remove : //p[has-class("text-sm font-italic mb-0")]
