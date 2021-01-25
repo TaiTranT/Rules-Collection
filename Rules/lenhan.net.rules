@@ -1,0 +1,28 @@
+~version: "2.1"
+
+$container? : //article[has-class("post-3897 post type-post status-publish format-standard category-kien-truc-nha-dep category-tu-van-thiet-ke tag-khong-gian-song tag-thiet-ke-nha-pho entry")]
+body : $container
+
+content_type : "generic"
+is_live : "no"
+
+title : //h1[has-class("entry-title")]
+
+$author : //p[@style="text-align: right;"]
+@replace ("Theo","") :$author
+author : $author
+
+$date : //meta[@property="article:published_time"]/@content
+@match("\\d.+\\+",""):$date 
+@replace("\\+",""):$date
+@replace("T"," "):$date 
+@replace("-","/"):$date 
+@datetime(+7,"en-US","yyyy/MM/dd hh:mm:ss"):$date  
+published_date : $@
+
+<figure> : //a[.//img]
+<figure> : //p[.//img]
+
+@remove : //div[has-class("yarpp-related")]
+@remove : //p[has-class("entry-meta")]
+@remove : //p[@style="text-align: right;"]
