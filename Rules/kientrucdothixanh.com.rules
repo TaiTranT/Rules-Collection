@@ -1,0 +1,25 @@
+~version: "2.1"
+
+$container? : //div[has-class("post-inner")]
+body : $container
+
+content_type : "generic"
+is_live : "no"
+
+title : //h1[has-class("name post-title entry-title")]
+
+$author : //span[has-class("post-meta-author")]//a
+author : $author
+
+$date : //meta[@property="article:published_time"]/@content
+@match("\\d.+\\+",""):$date 
+@replace("\\+",""):$date
+@replace("T"," "):$date 
+@replace("-","/"):$date 
+@datetime(+7,"en-US","yyyy/MM/dd hh:mm:ss"):$date  
+published_date : $@
+
+@remove : //p[has-class("post-meta")]
+@remove : //div[has-class("share-post")]
+@remove : //span[@style="display:none"]
+@remove : //div[@style="display:none"]
