@@ -1,0 +1,25 @@
+~version: "2.1"
+
+$container? : //div[has-class("content-news-details")]
+body : $container
+
+content_type : "generic"
+is_live : "no"
+
+title : //div[has-class("content-news-details")]//h1
+subtitle : //p[@style="text-align: justify;"]
+
+$author  : //p[has-class("p1")]
+author : $author
+
+$date : //div[has-class("content-news-details")]//div[has-class("time-primary")]//span[1]
+@datetime(+7,"en-US","dd/MM/yyyy")
+published_date : $@
+
+
+<figure> : //p[.//img]
+
+@remove : //ul[has-class("related-old-post")]
+@remove : //div[has-class("time-primary")]
+@remove : //div[has-class("socials-primary")]
+@remove : //p[has-class("p1")]
