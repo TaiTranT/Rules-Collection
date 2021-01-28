@@ -1,0 +1,35 @@
+~version: "2.1"
+
+$container? : //div[has-class("td-pb-row")]
+body : $container
+
+content_type : "generic"
+is_live : "no"
+
+title : //div[has-class("entry-title")]
+
+author : //div[has-class("td-post-author-name")]//a
+
+$date : //meta[@property="article:published_time"]/@content
+@match("\\d.+\\+",""):$date 
+@replace("\\+",""):$date
+@replace("T"," "):$date 
+@replace("-","/"):$date 
+@datetime(+7,"en-US","yyyy/MM/dd hh:mm:ss"):$date  
+published_date : $@
+
+
+<figure> : //a[.//img]
+<figure> : //p[.//img]
+<div>: //p[.//blockquote]
+
+@remove : $body//footer
+@remove : //header[has-class("td-post-title")]
+@remove : //div[@id="ftwp-container-outer"]
+@remove : //h4[has-class("td-related-title td-block-title")]
+@remove : //div[has-class("comments")]
+@remove : //div[has-class("td-related-span4")]
+@remove : //h4[has-class("block-title td-block-title")]
+@remove : //div[has-class("td_module_16 td_module_wrap td-animation-stack")]
+
+
