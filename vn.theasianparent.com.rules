@@ -1,0 +1,26 @@
+~version: "2.1"
+
+$container? : //div[has-class("article-container-view big-hero")]
+body : $container
+content_type : "generic"
+is_live : "no"
+
+title : //h1[has-class("page-title")]
+
+$date : //meta[@property="article:published_time"]/@content
+@replace("\\+.*",""):$date
+@replace("-","/"):$date
+@replace("T"," "):$date
+@datetime(+7,"en-US","yyyy/MM/dd hh:mm:ss"):$date
+published_date : $@
+
+author : //div[has-class("author-wrap")]//h3//a
+
+<figure> : //a[.//img]
+
+@remove : //div[has-class("readtime-share-wrap site-wrap flex flex-full-width")]
+@remove : //div[has-class("author-wrap")]
+@remove : //div[has-class("align-right share-wrap")]
+@remove : //div[has-class("only-mobile")]
+@remove : //div[has-class("not-mobile heading-meta-prefx")]
+@remove : //div[has-class("not-mobile")]
