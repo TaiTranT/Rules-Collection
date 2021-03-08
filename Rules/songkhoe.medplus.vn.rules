@@ -1,0 +1,49 @@
+~version: "2.1"
+
+$container? : //div[has-class("jeg_content jeg_singlepage")]
+body : $container
+content_type: "generic"
+is_live: "no"
+
+title : //h1[has-class("jeg_post_title")]
+subtitle ://h2[has-class("jeg_post_subtitle")]
+
+$date : //div[has-class("jeg_post_meta jeg_post_meta_2")]//div[has-class("jeg_meta_date")]//a
+@replace("Tháng Một","01"):$date
+@replace("Tháng Hai","02"):$date
+@replace("Tháng Ba","03"):$date
+@replace("Tháng Tư","04"):$date
+@replace("Tháng Nam","05"):$date
+@replace("Tháng Sáu","06"):$date
+@replace("Tháng Bảy","07"):$date
+@replace("Tháng Tám","08"):$date
+@replace("Tháng Chín","09"):$date
+@replace("Tháng Mười","10"):$date
+@replace("Tháng Mười Một","11"):$date
+@replace("Tháng Mười Hai","12"):$date
+@replace(" ","/"):$date
+@replace(",",""):$date
+@datetime(+7,"en-US","dd/MM/yyyy"):$date
+published_date :$@
+
+
+author : //div[has-class("jeg_meta_author")]//a
+
+
+<figure> : //a[.//img]
+<figure> : //p[.//img]
+
+@remove : //div[has-class("jeg_meta_container")]
+@remove : //div[has-class("jeg_share_top_container")]
+@remove : //div[has-class("jeg_breadcrumbs jeg_breadcrumb_container")]
+@remove : //div[@id="ftwp-container-outer"]
+@remove : //div[has-class("elementor-row")]
+@remove : //div[has-class("jeg_post_tags")]
+@remove : //div[has-class("jeg_share_bottom_container")]
+@remove : //div[has-class("jeg_ad jeg_article jnews_content_bottom_ads ")]
+@remove : //div[has-class("jnews_prev_next_container")]
+@remove : //div[has-class("jnews_author_box_container")]
+@remove : //div[has-class("jnews_related_post_container")]
+@remove : //div[has-class("jnews_popup_post_container")]
+@remove : //div[has-class("jnews_comment_container")]
+@remove : //div[has-class("jeg_tabpost_widget")]
