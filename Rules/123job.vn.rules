@@ -1,0 +1,29 @@
+~version: "2.1"
+
+$container? : //div[has-class("post-detail")]
+body : $container
+
+content_type: "generic"
+is_live: "no"
+
+title : //h1[has-class("post-detail__info__title")]
+
+@clone : //div[has-class("post-detail__info__author")]
+
+$date : $@
+@remove: $date//a
+@match("\\d.+",""): $date
+@replace("-","/"):$date
+@datetime(+7,"en-US","yyyy/MM/dd hh:mm:ss"):$date
+published_date : $@
+
+$author ://div[has-class("post-detail__info__author")]//div[1]
+@remove: $author//a
+@replace("\\d.+",""):$author
+@match("\\-.+"):$author
+@replace("- ",""):$author
+author : $author
+
+<figure> : //p[.//img]
+
+@remove : //div[has-class("post-detail__info__author")]
