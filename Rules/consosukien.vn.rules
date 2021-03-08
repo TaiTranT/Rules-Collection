@@ -1,0 +1,24 @@
+~version: "2.1"
+
+$container? : //div[has-class("page-body")]
+body : $container
+content_type : "generic"
+is_live : "no"
+
+title : //h1[has-class("title-30b title-border-left-top")]
+subtitle : //span[@style="color:#231f20;"]
+
+$date : //div[has-class("tool-before-article")]//div[has-class("row no-gutters")]//div[has-class("col")][1]
+@replace(" - "," ")
+@datetime(+7,"en-US","dd/MM/yyyy hh:mm a")
+published_date : $@
+
+author : //div[@style="text-align: right;"]//span[@style="font-family:tahoma,geneva,sans-serif;"]//strong//span[@style="color:#231f20;"][1]
+
+
+<figure> : //a[.//img]
+
+@remove : //div[@style="text-align: right;"]
+@remove : //div[has-class("tool-after-article")]
+@remove : //div[has-class("other-news mt-4")]
+@remove : //div[has-class("col-md-6 col-lg-12")]
