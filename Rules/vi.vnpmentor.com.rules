@@ -1,0 +1,30 @@
+~version: "2.1"
+
+$container? : //div[has-class("block-content")]
+body : $container
+content_type : "generic"
+is_live : "no"
+
+title : //div[has-class("col-md-12")]
+
+$date : //div[has-class("post-date")]
+@match("\\d.+"):$date
+@replace(" tháng",""):$date
+@replace(",",""):$date
+@replace(" ","/"):$date
+@datetime(+7,"en-US","dd/MM/yyyy"):$date
+published_date : $@
+
+$author : //span[has-class("author-heading")]
+author : $author
+$img : $body//img[not(@src)]
+@map( $img ) {
+  $img: $@
+  @set_attr(src,$img/@data-src):$img
+}
+
+<figure> : //a[.//img]
+<figure> : //p[.//img]
+
+@remove : //div[has-class("visible-xs-block")]
+
