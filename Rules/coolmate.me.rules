@@ -1,0 +1,23 @@
+~version: "2.1"
+
+$container? : //div[has-class("site-content")]
+body : $container
+content_type : "generic"
+is_live : "no"
+
+title : //h1[has-class("h2")]
+
+$date : //div[has-class("article-info")][not(prev-sibling::h3[has-class("article__title")])]
+@match("\\d.+"):$date
+@datetime(+7,"en-US","dd.mm.yyyy")
+published_date : $@
+
+
+<figure> : //a[.//img]
+<figure> : //p[.//img]
+
+@remove : //div[has-class("breadcrumb ")]
+@remove : //div[has-class("article-info")]
+@remove : //div[has-class("info-box")]
+@remove : //div[has-class("grid__column article-author")]
+@remove : //div[has-class("related-articles-container module")]
