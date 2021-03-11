@@ -1,0 +1,26 @@
+~version: "2.1"
+
+$container? : //div[has-class("col-md-9")]
+body : $container
+@debug
+content_type : "generic"
+is_live : "no"
+
+title : //h1[has-class("title-lg")]
+subtitle : //p[@style="text-align: justify;"]
+
+$date : //span[has-class("date")]
+@datetime(+7,"en-US","dd/MM/yyyy")
+published_date : $@
+
+author : //p[@style="text-align: right;"]
+
+<figure> : //a[.//img]
+<figure> : //p[.//img]
+<figure> : //p[.//iframe]
+<figure> : //em[.//iframe]
+
+@remove : //div[has-class("col-sm-12")]
+@remove : //p[@style="text-align: right;"]
+@remove : //div[has-class("box-tag")]
+@remove : //ul[has-class("list-inline mg-t-20")]
