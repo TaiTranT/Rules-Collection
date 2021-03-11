@@ -1,0 +1,26 @@
+~version: "2.1"
+
+$container? : //div[@id="primary"]
+body : $container
+content_type : "generic"
+is_live : "no"
+
+title : //div[has-class("entry-title")]
+
+$date : //meta[@property="article:published_time"]//@content
+@replace("T"," "):$date
+@datetime(+7,"en-US","yyyy-MM-dd hh:mm:ss"):$date
+published_date : $@
+
+author : //span[has-class("author-name")]
+
+
+<figure> : //a[.//img]
+
+@remove : //div[has-class("entry-meta")]
+@remove : //div[@id="toc_container"]
+@remove : //div[has-class("addtoany_share_save_container addtoany_content addtoany_content_bottom")]
+@remove : //div[has-class("yarpp-related")]
+@remove : //nav[has-class("navigation post-navigation")]
+@remove : //div[@id="comments"]
+@remove : //span[@style="font-family: 'times new roman', times, serif; font-size: 14pt; color: #008000;"]
