@@ -1,0 +1,20 @@
+~version: "2.1"
+
+$container? : //div[@id="rightcode"]
+body : $container
+content_type : "generic"
+is_live : "no"
+
+@remove : //div[@id="leftcode"]
+title : //div[has-class("title")]
+
+$date: //div[has-class("date")]
+@match("\\d.+"):$date
+@datetime(+7,"en-US","dd/MM/yyyy"):$date
+published_date : $@
+
+<figure> : //p[.//img]
+
+@remove : //div[has-class("CommonDauChiTietTin")]
+@remove : //div[has-class("CommonCuoiChiTietTin")]
+@remove : //div[@id="OtherPost"]
