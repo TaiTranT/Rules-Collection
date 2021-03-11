@@ -1,0 +1,22 @@
+~version: "2.1"
+
+$container? : //div[has-class("section-content padding news-details")]
+body : $container
+content_type : "generic"
+is_live : "no"
+
+title : //h1[ has-class("news-details-title")][2]
+subtitle : //p[@style="text-align:justify;"]
+
+$date : //span[has-class("publish-date")]
+@datetime(+7,"en-US","dd/MM/yyyy hh:mm"):$date
+published_date : $@
+
+author : //div[has-class("news-details-content-source")]
+
+<figure> : //p[.//img]
+
+@remove : //div[has-class("news-details-content-source")]
+@remove : //span[has-class("publish-date")]
+@remove : //div[has-class("print-send-mail")]
+@remove : //div[has-class("news-list-title")]
