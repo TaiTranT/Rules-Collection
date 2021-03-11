@@ -1,0 +1,22 @@
+~version: "2.1"
+
+$container? : //div[has-class("main-content")]
+body : $container
+content_type : "generic"
+is_live : "no"
+
+title : //div[has-class("mypost abc")]//h1
+subtitle : //h2[has-class("sapo")]
+
+$date : //script[@type][has-class("yoast-schema-graph")]
+@match("datePublished\\W+(\\d+.*\\d)\\+.+dateModified",1):$date
+@replace("T"," "):$date
+@replace("-","/"):$date
+@datetime(+7,"en-US","yyyy/MM/dd hh:mm:ss"):$date
+published_date: $@
+
+<figure> : //p[.//img]
+<figure> : //a[.//img]
+
+@remove : //div[has-class("yarpp-related")]
+@remove : //div[has-class("sidebar")]
