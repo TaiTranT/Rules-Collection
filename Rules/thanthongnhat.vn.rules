@@ -1,0 +1,20 @@
+~version: "2.1"
+
+$container? : //div[has-class("news_column panel panel-default newsdetail")]
+body : $container
+content_type : "generic"
+is_live : "no"
+
+title : //h1[has-class("title margin-bottom-lg")]
+subtitle : //div[has-class("hometext m-bottom")]
+
+$date : //span[has-class("h5")][1]
+@match("\\d.+"):$date
+@datetime(+7,"en-US","dd/MM/yyyy hh:mm")
+published_date : $@
+
+author : //p[has-class("h5 text-right")][1]
+
+@remove : //div[has-class("row margin-bottom-lg newsdetailmetatop")]
+@remove : //div[has-class("margin-bottom-lg")]
+@remove : //div[has-class("alert alert-info margin-bottom-lg")]
