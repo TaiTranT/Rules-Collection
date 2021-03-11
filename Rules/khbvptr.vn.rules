@@ -1,0 +1,27 @@
+~version: "2.1"
+
+$container? : //div[has-class("jeg_inner_content")]
+body : $container
+content_type : "generic"
+is_live : "no"
+
+title : //h1[has-class("jeg_post_title")]
+
+$date : //div[has-class("jeg_meta_date")]
+@datetime(+7,"en-US","dd/MM/yyyy"):$date
+published_date : $@
+
+$author : //div[has-class("jeg_meta_author")]//a
+@match("\\w.+-"):$author
+@replace(" -",""):$author
+author : $author
+
+<figure> : //p[.//img]
+<figure> : //a[.//img]
+
+@remove : //div[has-class("jeg_meta_date")]
+@remove : //div[has-class("jeg_post_meta jeg_post_meta_1")]
+@remove : //div[@id="toc_container"]
+@remove : //div[has-class("jeg_share_bottom_container")]
+@remove : //div[has-class("jeg_ad jeg_article jnews_content_bottom_ads ")]
+@remove : //div[has-class("jnews_related_post_container")]
