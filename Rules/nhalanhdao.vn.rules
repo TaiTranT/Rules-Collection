@@ -1,0 +1,30 @@
+~version: "2.1"
+
+$container? : //div[has-class("entry-content entry clearfix")]
+body : $container
+
+content_type : "generic"
+is_live : "no"
+
+title : //h1[has-class("post-title entry-title")]
+subtitle : //h2[has-class("description")]
+
+$author : //span[has-class("meta-author meta-item")]
+author : $author
+
+$date : //div[has-class("entry-header")]//div[has-class("post-meta")]//span[has-class("date meta-item")]
+@replace("Th","") : $date
+@replace(",","") : $date
+@replace(" ","/") : $date
+@datetime(+7,"en-US","MM/dd/yyyy"): $date
+published_date : $@
+
+<figure> : //a[.//img]
+<figure> : //td[.//img]
+<figure> : //p[.//img]
+
+@remove : //div[has-class("wp_rp_wrap  wp_rp_twocolumns")]
+@remove : //div[has-class("post-meta")]
+@remove : //p[@style="text-align: justify;"]
+@remove : //div[has-class("wp_rp_content")]
+@remove : //div[has-class("fb-comments fb_iframe_widget fb_iframe_widget_fluid_desktop")]
